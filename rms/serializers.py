@@ -9,7 +9,11 @@ class CategorySerializer(serializers.Serializer):
         category = Category.objects.create(**validated_data)
         # Category.objects.create(name=validated_data.get('name'))
         return category
-    
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance
 
 class TableSerializer(serializers.Serializer):
     id = serializers.IntegerField()
